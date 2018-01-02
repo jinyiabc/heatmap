@@ -20,13 +20,13 @@
 
 const svg = d3.select("body").append("svg")
     .attr("width", 960)
-    .attr("height", 500);
+    .attr("height", 600);
 
 
 const margin = {
     top: 70,
     right: 30,
-    bottom: 50,
+    bottom: 100,
     left: 70
   },
   width = 960 - margin.left - margin.right,
@@ -49,11 +49,11 @@ const margin = {
                .domain(monthlyVariance.map(d => d.variance));
                // .domain([0,10]);
 
-   for ( var i = 0; i< monthlyVariance.length; i++){
-       console.log(monthlyVariance[i].variance);
-       var d = monthlyVariance[i].variance;
-       console.log(colors(d));
-   }
+   // for ( var i = 0; i< monthlyVariance.length; i++){
+   //     console.log(monthlyVariance[i].variance);
+   //     var d = monthlyVariance[i].variance;
+   //     console.log(colors(d));
+   // }
 
    // console.log(z(-1.2));
 
@@ -86,6 +86,34 @@ const margin = {
             .attr("width", x.bandwidth())
             .attr("y", function(d) { return y(d.month)+margin.top-39.1;})
             .attr("height", 39.1);
+
+
+// Color Scale
+
+var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+var svg1 = svg.append("g")
+        .attr("transform", "translate(400,450)")
+             .attr("width", 400)
+             .attr("height", 50);
+
+svg1.selectAll("circle")
+     .data( d3.range(10) )
+     .enter()
+     .append("circle")
+     .attr("r", 18 )
+     .attr("cx", d3.scaleLinear().domain([-1, 10]).range([0, 400]) )
+     .attr("cy", 25)
+     .style("fill", function(d, i ) { return colorScale(d); });
+     // .style("fill", 'none');
+
+     svg1.selectAll("text")
+     .data( d3.range(10) )
+     .enter()
+     .append("text")
+           .attr("x", d3.scaleLinear().domain([-1, 10]).range([0, 400]))
+           // .style("text-anchor", "middle")
+           .attr("y", 25)
+           .text("1");
 
 });
 
