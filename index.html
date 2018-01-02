@@ -70,11 +70,15 @@ const margin = {
    y.domain(d3.extent(monthlyVariance, d => d.month));
 
    // const z = d3.extent(monthlyVariance, d => d.variance);
-   const colors = d3.scaleOrdinal(d3.schemeCategory10)
-               .domain(monthlyVariance.map(d => d.variance));
-               // .domain([0,10]);
+   // const colors = d3.scaleOrdinal(d3.schemeCategory10)
+   //             .domain(monthlyVariance.map(d => d.variance));
 
+   const colors = d3.scaleThreshold()
+                   .domain([-6.98,-5.62,-4.26,-2.91,-1.55,-0.2,1.16,2.52,3.87,5.23])
+                   // .domain(d3.range(10))
+                   .range(['#f7f4f9','#e7e1ef','#d4b9da','#c994c7','#df65b0','#e7298a','#ce1256','#980043','#67001f']);
 
+   // console.log(color2(0.025));
 
    // for ( var i = 0; i< monthlyVariance.length; i++){
    //     console.log(monthlyVariance[i].variance);
@@ -130,8 +134,18 @@ const margin = {
 
 
 // Color Scale
+const z = d3.extent(monthlyVariance, d => d.variance);
+// console.log(z); //[-6.976, 5.228]
+// console.log( d3.range(10));
 
-var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+const colorScale = d3.scaleThreshold()
+                // .domain([-6.98,-5.62,-4.26,-2.91,-1.55,-0.2,1.16,2.52,3.87,5.23])
+                .domain(d3.range(10))
+                .range(['#f7f4f9','#e7e1ef','#d4b9da','#c994c7','#df65b0','#e7298a','#ce1256','#980043','#67001f']);
+
+
+
+// var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
 var svg1 = svg.append("g")
         .attr("transform", "translate(400,450)")
              .attr("width", 400)
@@ -147,11 +161,9 @@ svg1.selectAll("circle")
      .style("fill", function(d, i ) { return colorScale(d); });
      // .style("fill", 'none');
 
-   const z = d3.extent(monthlyVariance, d => d.variance);
-
    const format = d3.format(".2f");
    const number = d3.scaleLinear().domain([1,10]).range(z);
-   // console.log(z);
+   console.log(z);
    // console.log(format(number(1)));
    // console.log(format(number(10)));
    // console.log( d3.range(10));
