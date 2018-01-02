@@ -38,7 +38,7 @@ const margin = {
   const y = d3.scaleLinear()
             .range([height, 0]);
 
- const data = d3.json('data/data1.json',function(data){
+ const data = d3.json('data/data.json',function(data){
    // console.log(data['monthlyVariance']);
    const monthlyVariance = data['monthlyVariance'];
    x.domain(monthlyVariance.map(d => d.year));
@@ -47,11 +47,13 @@ const margin = {
    // const z = d3.extent(monthlyVariance, d => d.variance);
    const colors = d3.scaleOrdinal(d3.schemeCategory10)
                .domain(monthlyVariance.map(d => d.variance));
-   // for ( var i = 0; i< monthlyVariance.length; i++){
-   //     console.log(monthlyVariance[i].variance);
-   //     var d = monthlyVariance[i].variance;
-   //     console.log(z(d));
-   // }
+               // .domain([0,10]);
+
+   for ( var i = 0; i< monthlyVariance.length; i++){
+       console.log(monthlyVariance[i].variance);
+       var d = monthlyVariance[i].variance;
+       console.log(colors(d));
+   }
 
    // console.log(z(-1.2));
 
